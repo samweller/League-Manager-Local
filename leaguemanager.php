@@ -480,6 +480,15 @@ class LeagueManagerLoader
 						`league_id` int( 11 ) NOT NULL,
 						PRIMARY KEY ( `id` )) $charset_collate;";
 		maybe_create_table( $wpdb->leaguemanager_stats, $create_stats_sql );
+		
+		$create_location_sql = "CREATE TABLE {$wpdb->leaguemanager_location} (
+						`id` int( 11 ) NOT NULL AUTO_INCREMENT,
+						`name` varchar( 30 ) NOT NULL default '',
+						`address` longtext NOT NULL,
+						`latlong` varchar( 30 ) NOT NULL,
+						`team_id` int( 11 ) NOT NULL,
+						PRIMARY KEY ( `id` )) $charset_collate;";
+		maybe_create_table( $wpdb->leaguemanager_location, $create_location_sql );
 	}
 		
 		
@@ -494,6 +503,7 @@ class LeagueManagerLoader
 		
 		$wpdb->query( "DROP TABLE {$wpdb->leaguemanager_matches}" );
 		$wpdb->query( "DROP TABLE {$wpdb->leaguemanager_teams}" );
+		$wpdb->query( "DROP TABLE {$wpdb->leaguemanager_location}" );
 		$wpdb->query( "DROP TABLE {$wpdb->leaguemanager}" );
 		
 		delete_option( 'leaguemanager_widget' );
