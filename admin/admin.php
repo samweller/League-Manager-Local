@@ -78,6 +78,7 @@ class LeagueManagerAdminPanel extends LeagueManager
     $menu['settings'] = array( 'title' => __('Preferences', 'leaguemanager'), 'file' => dirname(__FILE__) . '/settings.php', 'show' => true );
     $menu['seasons'] = array( 'title' => __('Seasons', 'leaguemanager'), 'file' => dirname(__FILE__) . '/seasons.php', 'show' => true );
     $menu['team'] = array( 'title' => __('Add Team', 'leaguemanager'), 'file' => dirname(__FILE__) . '/team.php', 'show' => true );
+    $menu['location'] = array( 'title' => __('Add Location', 'leaguemanager'), 'file' => dirname(__FILE__) . '/location.php', 'show' => true );
     $menu['match'] = array( 'title' => __('Add Matches', 'leaguemanager'), 'file' => dirname(__FILE__) . '/match.php', 'show' => true );
 
     $menu = apply_filters('league_menu_'.$league->sport, $menu, $leaguemanager->getLeagueID(), $leaguemanager->getCurrentSeason('name'));
@@ -1496,7 +1497,7 @@ class LeagueManagerAdminPanel extends LeagueManager
   {
     global $wpdb, $leaguemanager;
 
-    $sql = "INSERT INTO {$wpdb->leaguemanager_location} (`name`, `address`, `latlong`, `team_id`) VALUES ('%s', '%s', '%s', '%d')";
+    $sql = "INSERT INTO {$wpdb->leaguemanager_locations} (`name`, `address`, `latlong`, `team_id`) VALUES ('%s', '%s', '%s', '%d')";
     $wpdb->query( $wpdb->prepare ( $sql, $name, $address, $latlong, $team_id ) );
     $location_id = $wpdb->insert_id;
 
