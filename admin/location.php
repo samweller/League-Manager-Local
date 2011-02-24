@@ -16,6 +16,9 @@ else :
     $location = (object)array( 'name' => '', 'address' => '', 'latlong' => '', 'team_id' => '' );
   }
 
+  $league = $leaguemanager->getLeague( $league_id );
+  $season = isset($_GET['season']) ? $_GET['season'] : '';
+
 ?>
 
   <div class="wrap" style="border: 2px solid red;">
