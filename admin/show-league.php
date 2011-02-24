@@ -127,6 +127,12 @@ if ( $league->mode != 'championship' ) {
   $teams = $leaguemanager->getTeams( $team_search );
   $matches = $leaguemanager->getMatches( $match_search );
 }
+
+// Get list of locations
+// XXXXXXXXXXXXXXXXXXXXXXXXXX
+// Search param for function -  $ location _ search
+$locations = $leaguemanager->getLocations();
+
 ?>
 <div class="wrap">
   <p class="leaguemanager_breadcrumb"><a href="admin.php?page=leaguemanager"><?php _e( 'Leaguemanager', 'leaguemanager' ) ?></a> &raquo; <?php echo $league->title ?></p>
@@ -159,15 +165,31 @@ if ( $league->mode != 'championship' ) {
   <?php endif; ?>
   <?php endforeach; ?>
   </ul>
-  
-  
-  <?php if ( $league->mode == 'championship' ) : ?>
-    <?php include('championship.php'); ?>
-  <?php else : ?>
-    <h3 style="clear: both;"><?php _e( 'Table', 'leaguemanager' ) ?></h3>
-    <?php include_once('standings.php'); ?>
 
+  <?php
+
+    // Output the League Page
+    // Championship Table
+    if ( $league->mode == 'championship' ) :
+      include('championship.php');
+    else :
+    // Standings
+  ?>
+    <div class="clearBoth" style="clear: both;"></div>
+    <h3><?php _e( 'League Standings', 'leaguemanager' ) ?></h3>
+    <?php
+      include_once('standings.php');
+    //Matches
+    ?>
     <h3><?php _e( 'Match Plan','leaguemanager' ) ?></h3>
-    <?php include('matches.php'); ?>
-  <?php endif; ?>
+    <?php
+      include('matches.php');
+    endif;
+  ?>
+  <h3>Locations</h3>
+  <?php
+    // Locations table
+    include('locations.php');
+  ?>
+
 </div>

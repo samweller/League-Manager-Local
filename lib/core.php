@@ -562,6 +562,53 @@ class LeagueManager
     
     return $team;
   }
+
+
+
+
+  /**
+   * get locations from database
+   *XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   * @param string $search search string for WHERE clause.
+   * @param string $output OBJECT | ARRAY
+   * @return array database results
+   */
+  function getLocations( $search = '', $orderby = false, $output = 'OBJECT' )
+  {
+    global $wpdb;
+    
+    if ( !empty($search) ) $search = " WHERE $search";
+    if ( !$orderby ) $orderby = "`name` ASC, `id` ASC";
+
+    $locationlist = $wpdb->get_results( "SELECT * FROM {$wpdb->leaguemanager_locations} $search ORDER BY $orderby" );
+    $locations = array(); $i = 0;
+    foreach ( $locationlist AS $location ) {
+      $location->custom = maybe_unserialize($location->custom);
+      if ( 'ARRAY' == $output ) {
+        $locations[$location->id]['name'] = $ocation->name;
+        $locations[$location->id]['address'] = $location->address;
+        $locations[$location->id]['latlong'] = $location->latlong;
+
+        foreach ( (array)$location->custom AS $key => $value )
+          $locations[$location->id][$key] = $value;
+      } else {
+        $locationlist[$i]->roster = maybe_unserialize($location->roster);
+
+        //$tlocationlist[$i]->nam = htmlspecialchars(stripslashes($team->title), ENT_QUOTES);
+        //$tlocationlist[$i] = (object)array_merge((array)$team, (array)$team->custom);
+      }
+
+      unset($locationlist[$i]->custom, $location->custom);
+      $i++;
+    }
+
+    if ( 'ARRAY' == $output )
+      return $locations;
+
+    return $locationlist;
+  }
+
+
   
   
   /**
