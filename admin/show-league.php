@@ -5,8 +5,19 @@ if (isset($_POST['updateLeague']) &&
   !isset($_POST['doaction3']) )
 {
   // LOCATION - NEW
-  if ( 'location' == $_POST['updateLeague'] ) {
-    $this->addLocation($_POST['name'], $_POST['address'], $_POST['latlong'], $_POST['team_id']);
+  if ( 'location' == $_POST['updateLeague'] )
+  {
+    $jsonurl = "http://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($_POST['address'])."+".urlencode($_POST['state'])."&sensor=false";
+    $json = file_get_contents($jsonurl,0,null,null);
+    $json_output = json_decode($json,true);
+    
+    //echo $jsonurl;
+
+    $latlong = $json_output['results'][0]['geometry']['location']['lat'].",".$json_output['results'][0]['geometry']['location']['lng'];
+
+    //echo $latlong;
+
+    $this->addLocation($_POST['name'], $_POST['address'], $latlong, $_POST['team_id']);
   }
   // TEAM
   elseif ( 'team' == $_POST['updateLeague'] )
@@ -83,12 +94,17 @@ if (isset($_POST['updateLeague']) &&
   $leaguemanager->printMessage();
 
 // ELSEIF NOT SET
-}  elseif ( isset($_POST['doaction']) || isset($_POST['doaction2']) ) {
-  if ( isset($_POST['doaction']) && $_POST['action'] == "delete" ) {
+}
+elseif ( isset($_POST['doaction']) || isset($_POST['doaction2']) )
+{
+  if ( isset($_POST['doaction']) && $_POST['action'] == "delete" )
+  {
     check_admin_referer('teams-bulk');
     foreach ( $_POST['team'] AS $team_id )
       $this->delTeam( $team_id, true );
-  } elseif ( isset($_POST['doaction2']) && $_POST['action2'] == "delete" ) {
+  }
+  elseif ( isset($_POST['doaction2']) && $_POST['action2'] == "delete" )
+  {
     check_admin_referer('matches-bulk');
     foreach ( $_POST['match'] AS $match_id )
       $this->delMatch( $match_id );

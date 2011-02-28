@@ -1,3 +1,6 @@
+/*
+  Display locations table on LM home page
+*/
 <form id="teams-filter" action="" method="post" name="standings">
 <?php wp_nonce_field( 'teams-bulk' ) ?>
 
@@ -26,3 +29,5 @@
     <?php endforeach; ?>
   </tobdy>
 </table>
+
+</form>

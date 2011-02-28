@@ -1,3 +1,9 @@
+<?php
+/*
+  Add / Edit Locations Page Template
+*/
+?>
+
 <script type="javascript">
 Leaguemanager.reInit();
 </script>
@@ -13,7 +19,7 @@ else :
     $form_title = __( 'Edit Location', 'leaguemanager' );
   } else {
     $form_title = __( 'Add Location', 'leaguemanager' );
-    $location = (object)array( 'name' => '', 'address' => '', 'latlong' => '', 'team_id' => '' );
+    $location = (object)array( 'name' => '', 'address' => '', 'state' => '', 'team_id' => '' );
   }
 
   $league_id = isset($_GET['league_id']) ? $_GET['league_id'] : '';
@@ -37,8 +43,8 @@ else :
           <input type="text" name="address" id="address" />
         </li>
         <li>
-          <label for="Lat-Long">Google LatLong</label>
-          <input type="text" name="latlong" id="latlong" />
+          <label for="Lat-Long">State, Country</label>
+          <input type="text" name="state" id="state" />
         </li>
         <li>
           <label for="Team">Choose Team</label>
