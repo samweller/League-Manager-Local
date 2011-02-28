@@ -621,7 +621,7 @@ class LeagueManager
   function getLocation( $location_id )
   {
     global $wpdb;
-
+ 
     $location = $wpdb->get_results( "SELECT * FROM {$wpdb->leaguemanager_locations} WHERE `id` = '".$location_id."' ORDER BY `name` ASC" );
     $location = $location[0];
 

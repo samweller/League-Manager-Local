@@ -64,7 +64,13 @@
 			<td><?php echo ( substr($match->date, 0, 10) == '0000-00-00' ) ? 'N/A' : mysql2date(get_option('date_format'), $match->date) ?></td>
 			<?php if ( !empty($league->groups) ) : ?><td class="num"><?php echo $match->group ?></td><?php endif; ?>
 			<td><a href="admin.php?page=leaguemanager&amp;subpage=match&amp;edit=<?php echo $match->id ?>&amp;season=<?php echo $season['name'] ?>"><?php echo $title ?></a></td>
-			<td><?php echo ( empty($match->location) ) ? 'N/A' : $match->location ?></td>
+			<td>
+  			<?php
+  			  $location_id = $match->location;
+  			  $location = $leaguemanager->getLocation($location_id);
+  			  echo $location->name.", ".$location->address;
+  			?>
+			</td>
 			<td><?php echo ( '00:00' == $match->hour.":".$match->minutes ) ? 'N/A' : mysql2date(get_option('time_format'), $match->date) ?></td>
 			<td>
 				<input class="points" type="text" size="2" id="home_points_<?php echo $match->id ?>_regular" name="home_points[<?php echo $match->id ?>]" value="<?php echo $match->home_points ?>" /> : <input class="points" type="text" size="2" id="away_points[<?php echo $match->id ?>]" name="away_points[<?php echo $match->id ?>]" value="<?php echo $match->away_points ?>" />
