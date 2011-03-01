@@ -1,7 +1,6 @@
 <?php
 if ( !current_user_can( 'manage_leagues' ) ) : 
   echo '<p style="text-align: center;">'.__("You do not have sufficient permissions to access this page.").'</p>';
-  
 else :
   $error = $is_finals = $finalkey = $cup = false;
   $group = $_GET['group'];
@@ -135,6 +134,12 @@ else :
       <?php if ( !$is_finals ) : ?>
       <table class="form-table">
       <?php if ( !$bulk ) : ?>
+      
+      <tr>
+        <th scope="row"><label for="round"><?php _e('Round/Week', 'leaguemanager') ?></label></th>
+        <td><?php echo $matches[0]->round; ?></td>
+      </tr>
+      
       <tr>
         <th scope="row"><label for="date"><?php _e('Date', 'leaguemanager') ?></label></th>
         <td><?php echo $this->getDateSelection( $matches[0]->day, $matches[0]->month, $matches[0]->year) ?></td>
@@ -171,8 +176,12 @@ else :
       </table>
       <?php endif; ?>
       
-      <p class="match_info"><?php if ( !$edit ) : ?><?php _e( 'Note: Matches with different Home and Guest Teams will be added to the database.', 'leaguemanager' ) ?><?php endif; ?></p>
-    
+      <p class="match_info">
+        <?php if ( !$edit ) : ?>
+          <?php _e( 'Note: Matches with different Home and Guest Teams will be added to the database.', 'leaguemanager' ) ?>
+        <?php endif; ?>
+      </p>
+
       <table class="widefat">
         <thead>
           <tr>
@@ -196,19 +205,27 @@ else :
           <td><?php echo $this->getDateSelection( $matches[$i]->day, $matches[$i]->month, $matches[$i]->year, $i) ?></td>
           <?php endif; ?>
           <?php if ( $cup && !$is_finals ) : ?>
-          <td>
-            <select size="1" name="match_day[<?php echo $i ?>]">
-              <?php for ($d = 1; $d <= $season['num_match_days']; $d++) : ?>
-              <option value="<?php echo $d ?>"<?php if($d == $match_day) echo ' selected="selected"' ?>><?php echo $d ?></option>
-              <?php endfor; ?>
-            </select>
-          </td>
+            <td>
+              <select size="1" name="match_day[<?php echo $i ?>]">
+                <?php for ($d = 1; $d <= $season['num_match_days']; $d++) : ?>
+                  <option value="<?php echo $d ?>"<?php if($d == $match_day) echo ' selected="selected"' ?>>
+                    <?php echo $d ?>
+                  </option>
+                <?php endfor; ?>
+              </select>
+            </td>
           <?php endif; ?>
           <td>
-            <select size="1" name="home_team[<?php echo $i ?>]" id="home_team_<?php echo $i ?>" onChange="Leaguemanager.insertHomeStadium(this.value, <?php echo $i ?>);">
-            <?php foreach ( $teams AS $team ) : ?>
-              <option value="<?php echo $team->id ?>"<?php selected($team->id, $matches[$i]->home_team ) ?>><?php echo $team->title ?></option>
-            <?php endforeach; ?>
+            <select size="1"
+              name="home_team[<?php echo $i ?>]" 
+              id="home_team_<?php echo $i ?>" 
+              onChange="Leaguemanager.insertHomeStadium(this.value, <?php echo $i ?>);"
+            >
+              <?php foreach ( $teams AS $team ) : ?>
+                <option value="<?php echo $team->id ?>"
+                  <?php selected($team->id, $matches[$i]->home_team ) ?>
+                ><?php echo $team->title ?></option>
+              <?php endforeach; ?>
             </select>
           </td>
           <td>

@@ -6,6 +6,8 @@ else :
   $options = get_option('leaguemanager');
   $league = $leaguemanager->getCurrentLeague();
   if ( isset($_POST['updateSettings']) ) {
+    
+
     check_admin_referer('leaguemanager_manage-league-options');
 
     $settings = (array)$_POST['settings'];
@@ -117,6 +119,24 @@ else :
           </select>
         </td>
       </tr>
+      
+      <tr valign="top">
+        <th scope="row"><label for="week_label"><?php _e( 'Label for each week / round', 'leaguemanager' ) ?></label></th>
+        <td>
+          <input type="text" size="40" name="settings[week_label]" id="week_label" value="<?php echo $league->week_label; ?>" />
+          EG: "Week 1, Round 1 etc"
+        </td>
+      </tr>
+      
+      <tr valign="top">
+        <th scope="row"><label for="rounds"><?php _e( 'No. of Rounds/Weeks', 'leaguemanager' ) ?></label></th>
+        <td>
+          <input type="text" size="40" name="settings[rounds]" id="rounds" value="<?php echo $league->rounds; ?>" />
+          How many regular season weeks/rounds will be played, regardless of byes
+        </td>
+      </tr>
+      
+      
       <tr valign="top">
         <th scope="row"><label for="upload_dir"><?php _e( 'Upload Directory', 'leaguemanager' ) ?></label></th>
         <td><input type="text" size="40" name="settings[upload_dir]" id="upload_dir" value="<?php echo $league->upload_dir ?>" /></td>
