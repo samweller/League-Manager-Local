@@ -7,17 +7,17 @@ if (isset($_POST['updateLeague']) &&
   // LOCATION - NEW
   if ( 'location' == $_POST['updateLeague'] )
   {
+
+    // TODO XXXXXXXXXXXXXXXXX
+    // Make this a function and handle errors in geocoding
+
     $jsonurl = "http://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($_POST['address'])."+".urlencode($_POST['state'])."&sensor=false";
     $json = file_get_contents($jsonurl,0,null,null);
     $json_output = json_decode($json,true);
     
-    //echo $jsonurl;
-
     $latlong = $json_output['results'][0]['geometry']['location']['lat'].",".$json_output['results'][0]['geometry']['location']['lng'];
 
-    //echo $latlong;
-
-    $this->addLocation($_POST['name'], $_POST['address'], $latlong, $_POST['team_id']);
+    $this->addLocation($_POST['name'], $_POST['address'], $_POST['state'], addslashes($latlong), $_POST['team_id']);
   }
   // TEAM
   elseif ( 'team' == $_POST['updateLeague'] )

@@ -486,6 +486,7 @@ class LeagueManagerLoader
             `id` int( 11 ) NOT NULL AUTO_INCREMENT,
             `name` varchar( 30 ) NOT NULL default '',
             `address` longtext NOT NULL,
+            `state` varchar( 50 ) NOT NULL,
             `latlong` varchar( 30 ) NOT NULL,
             `team_id` int( 11 ) NOT NULL,
             PRIMARY KEY ( `id` )) $charset_collate;";

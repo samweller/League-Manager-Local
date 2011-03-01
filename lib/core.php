@@ -787,7 +787,8 @@ class LeagueManager
 
   /**
    * determine if two teams are tied
-   *
+   * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   * TODO: activate for against percentage to determine who is winning if teams are tied
    * @param object $team
    * @param object $team2
    * @return boolean
@@ -893,5 +894,47 @@ class LeagueManager
     else
       return $cards;
   }
+  
+  
+  /**
+  * get points for a team
+  *
+  */
+  function getForPoints($team_id)
+  {
+    global $wpdb;
+    
+    $forHome = $wpdb->get_results( "SELECT SUM(`home_points`) as home FROM {$wpdb->leaguemanager_matches} WHERE `home_team` = {$team_id}" );
+    $forAway = $wpdb->get_results( "SELECT SUM(`away_points`) as away FROM {$wpdb->leaguemanager_matches} WHERE `away_team` = {$team_id}" );
+    
+    $for = $forHome[0]->home;
+    $away = $forAway[0]->away;
+    
+    $forPoints = $for + $away;
+    
+    return $forPoints;
+  }
+  
+  /**
+  * get points against a team
+  *
+  */
+  function getAgainstPoints($team_id)
+  {
+    global $wpdb;
+    
+    $againstHome = $wpdb->get_results( "SELECT SUM(`home_points`) as home FROM {$wpdb->leaguemanager_matches} WHERE `away_team` = {$team_id}" );
+    $againstAway = $wpdb->get_results( "SELECT SUM(`away_points`) as away FROM {$wpdb->leaguemanager_matches} WHERE `home_team` = {$team_id}" );
+
+    $for = $againstHome[0]->home;
+    $against = $againstAway[0]->away;
+    
+    $againstPoints = $for + $against;
+    
+    return $againstPoints;
+  }
+  
+  
+  
 }
 ?>

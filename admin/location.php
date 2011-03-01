@@ -24,6 +24,7 @@ else :
 
   $league_id = isset($_GET['league_id']) ? $_GET['league_id'] : '';
   $season = isset($_GET['season']) ? $_GET['season'] : '';
+  $teams = $leaguemanager->getTeams($search=false);
 
 ?>
 
@@ -36,21 +37,21 @@ else :
       <ol>
         <li>
           <label for="Name">Ground Name</label>
-          <input type="text" name="name" id="name" />
+          <input type="text" name="name" id="name" value="<?php echo $location->name; ?>" />
         </li>
         <li>
           <label for="Address">Address</label>
-          <input type="text" name="address" id="address" />
+          <input type="text" name="address" id="address" value="<?php echo $location->address; ?>" />
         </li>
         <li>
           <label for="Lat-Long">State, Country</label>
-          <input type="text" name="state" id="state" />
+          <input type="text" name="state" id="state" value="<?php echo $location->state; ?>" />
         </li>
         <li>
           <label for="Team">Choose Team</label>
-          <select size="1" name="team_[<?php echo $i ?>]" id="team_<?php echo $i ?>" onChange="Leaguemanager.insertHomeStadium(this.value, <?php echo $i ?>);">
+          <select size="1" name="team_id" id="team_id">
           <?php foreach ( $teams AS $team ) : ?>
-            <option value="<?php echo $team->id ?>"<?php selected($team->id, $matches[$i]->home_team ) ?>><?php echo $team->title ?></option>
+            <option value="<?php echo $team->id ?>"<?php echo ($team->id == $location->team_id) ? '"selected"' : ''; ?>><?php echo $team->title ?></option>
           <?php endforeach; ?>
           </select>
         </li>

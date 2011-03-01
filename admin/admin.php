@@ -1493,12 +1493,12 @@ class LeagueManagerAdminPanel extends LeagueManager
    * add new location
    * XXXXXXXXXXXXXXXXXXXXX
    */
-  function addLocation($name, $address, $latlong, $team_id, $message = true)
+  function addLocation($name, $address, $state, $latlong, $team_id, $message = true)
   {
     global $wpdb, $leaguemanager;
 
-    $sql = "INSERT INTO {$wpdb->leaguemanager_locations} (`name`, `address`, `latlong`, `team_id`) VALUES ('%s', '%s', '%s', '%d')";
-    $wpdb->query( $wpdb->prepare ( $sql, $name, $address, $latlong, $team_id ) );
+    $sql = "INSERT INTO {$wpdb->leaguemanager_locations} (`name`, `address`, `state`, `latlong`, `team_id`) VALUES ('%s', '%s', '%s',  '%s', '%d')";
+    $wpdb->query( $wpdb->prepare ( $sql, $name, $address, $state, $latlong, $team_id ) );
     $location_id = $wpdb->insert_id;
 
     if ( $message )
