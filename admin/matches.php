@@ -43,7 +43,7 @@
         <th scope="col" class="check-column">
           <input type="checkbox" onclick="Leaguemanager.checkAll(document.getElementById('competitions-filter'));" />
         </th>
-        <th><?php _e( 'Round','leaguemanager' ) ?></th>
+        <th><?php _e( $league->week_label,'leaguemanager' ) ?></th>
         <th><?php _e( 'Date','leaguemanager' ) ?></th>
         <?php if ( !empty($league->groups) && $league->mode != 'championchp' ) : ?>
           <th class="num"><?php _e( 'Group', 'leaguemanager' ) ?></th>

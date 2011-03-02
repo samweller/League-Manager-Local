@@ -459,6 +459,7 @@ class LeagueManagerLoader
             `id` int( 11 ) NOT NULL AUTO_INCREMENT ,
             `group` varchar( 30 ) NOT NULL default '',
             `date` datetime NOT NULL default '0000-00-00',
+            `round` int( 11 ) NOT NULL default '1',
             `home_team` varchar( 255 ) NOT NULL default '0',
             `away_team` varchar( 255 ) NOT NULL default '0',
             `match_day` tinyint( 4 ) NOT NULL default '0',

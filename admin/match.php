@@ -117,6 +117,10 @@ else :
     $locations =  $leaguemanager->getLocations();
 
   }
+  
+  //print_r($matches);
+  echo $matches[0]->round;
+  
   ?>
   
   <div class="wrap">
@@ -136,8 +140,14 @@ else :
       <?php if ( !$bulk ) : ?>
       
       <tr>
-        <th scope="row"><label for="round"><?php _e('Round/Week', 'leaguemanager') ?></label></th>
-        <td><?php echo $matches[0]->round; ?></td>
+        <th scope="row"><label for="round"><?php _e($league->week_label, 'leaguemanager') ?></label></th>
+        <td>
+          <select id="round" name="round">
+            <?php for ($i = 1; $i <= $league->rounds; $i++) : ?>
+              <option value="<?php echo $i; ?>"<?php if($i == $matches[0]->round) echo ' selected="selected"'; ?>><?php echo $i; ?></option>
+            <?php endfor; ?>
+          </select>
+        </td>
       </tr>
       
       <tr>

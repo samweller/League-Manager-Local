@@ -4,6 +4,10 @@ if (isset($_POST['updateLeague']) &&
   !isset($_POST['doaction2']) &&
   !isset($_POST['doaction3']) )
 {
+  //echo '<pre>';
+  //print_r($_POST);
+  //echo '</pre>';
+  
   // LOCATION - NEW
   if ( 'location' == $_POST['updateLeague'] )
   {
@@ -55,11 +59,11 @@ if (isset($_POST['updateLeague']) &&
         if ( isset($_POST['add_match'][$i]) || $_POST['away_team'][$i] != $_POST['home_team'][$i]  ) {
           $index = ( isset($_POST['year'][$i]) && isset($_POST['month'][$i]) && isset($_POST['day'][$i]) ) ? $i : 0;
           $date = $_POST['year'][$index].'-'.$_POST['month'][$index].'-'.$_POST['day'][$index].' '.$_POST['begin_hour'][$i].':'.$_POST['begin_minutes'][$i].':00';
+          $round = $_POST['round'];
           $match_day = is_array($_POST['match_day']) ? $_POST['match_day'][$i] : $_POST['match_day'];
           $custom = isset($_POST['custom']) ? $_POST['custom'][$i] : array();
 
-          $this->addMatch( $date, $_POST['home_team'][$i], $_POST['away_team'][$i], $match_day,
-          $_POST['location'][$i], $_POST['league_id'], $_POST['season'], $group, $_POST['final'], $custom );
+          $this->addMatch($date, $round, $_POST['home_team'][$i], $_POST['away_team'][$i], $match_day, $_POST['location'][$i], $_POST['league_id'], $_POST['season'], $group, $_POST['final'], $custom);
         } else {
           $num_matches -= 1;
         }
@@ -70,8 +74,9 @@ if (isset($_POST['updateLeague']) &&
       foreach ( $_POST['match'] AS $i => $match_id ) {
         $index = ( isset($_POST['year'][$i]) && isset($_POST['month'][$i]) && isset($_POST['day'][$i]) ) ? $i : 0;
         $date = $_POST['year'][$index].'-'.$_POST['month'][$index].'-'.$_POST['day'][$index].' '.$_POST['begin_hour'][$i].':'.$_POST['begin_minutes'][$i].':00';
+        $round = $_POST['round'];
         $custom = isset($_POST['custom']) ? $_POST['custom'][$i] : array();
-        $this->editMatch( $date, $_POST['home_team'][$i], $_POST['away_team'][$i], $_POST['match_day'], $_POST['location'][$i], $_POST['league_id'], $match_id, $group, $_POST['final'], $custom );
+        $this->editMatch( $date, $round, $_POST['home_team'][$i], $_POST['away_team'][$i], $_POST['match_day'], $_POST['location'][$i], $_POST['league_id'], $match_id, $group, $_POST['final'], $custom );
       }
       $leaguemanager->setMessage(sprintf(__ngettext('%d Match updated', '%d Matches updated', $num_matches, 'leaguemanager'), $num_matches));
     }
@@ -143,6 +148,8 @@ if ( $league->mode != 'championship' ) {
   $teams = $leaguemanager->getTeams( $team_search );
   $matches = $leaguemanager->getMatches( $match_search );
 }
+
+//print_r($matches);
 
 // Get list of locations
 // XXXXXXXXXXXXXXXXXXXXXXXXXX

@@ -862,13 +862,14 @@ class LeagueManagerAdminPanel extends LeagueManager
    * @param mixed $group
    * @param string $final
    * @param array $custom
+   * @param int $round
    * @return string
    */
-  function addMatch( $date, $home_team, $away_team, $match_day, $location, $league_id, $season, $group, $final, $custom )
+  function addMatch( $date, $round, $home_team, $away_team, $match_day, $location, $league_id, $season, $group, $final, $custom )
   {
     global $wpdb;
-    $sql = "INSERT INTO {$wpdb->leaguemanager_matches} (date, home_team, away_team, match_day, location, league_id, season, final, custom, `group`) VALUES ('%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s')";
-    $wpdb->query ( $wpdb->prepare ( $sql, $date, $home_team, $away_team, $match_day, $location, $league_id, $season, $final, maybe_serialize($custom), $group ) );
+    $sql = "INSERT INTO {$wpdb->leaguemanager_matches} (date, round, home_team, away_team, match_day, location, league_id, season, final, custom, `group`) VALUES ('%s', '%d', '%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s')";
+    $wpdb->query ( $wpdb->prepare ( $sql, $date, $round, $home_team, $away_team, $match_day, $location, $league_id, $season, $final, maybe_serialize($custom), $group ) );
     return $wpdb->insert_id;
   }
 
@@ -888,7 +889,7 @@ class LeagueManagerAdminPanel extends LeagueManager
    * @param array $custom
    * @return string
    */
-  function editMatch( $date, $home_team, $away_team, $match_day, $location, $league_id, $match_id, $group, $final, $custom )
+  function editMatch( $date, $round, $home_team, $away_team, $match_day, $location, $league_id, $match_id, $group, $final, $custom )
   {
     global $wpdb;
     $this->league_id = $league_id;
@@ -898,7 +899,7 @@ class LeagueManagerAdminPanel extends LeagueManager
 
     $match = $wpdb->get_results( "SELECT `custom` FROM {$wpdb->leaguemanager_matches} WHERE `id` = {$match_id}" );
     $custom = array_merge( (array)maybe_unserialize($match[0]->custom), $custom );
-    $wpdb->query( $wpdb->prepare ( "UPDATE {$wpdb->leaguemanager_matches} SET `date` = '%s', `home_team` = '%s', `away_team` = '%s', `match_day` = '%d', `location` = '%s', `league_id` = '%d', `group` = '%s', `final` = '%s', `custom` = '%s' WHERE `id` = %d", $date, $home_team, $away_team, $match_day, $location, $league_id, $group, $final, maybe_serialize($custom), $match_id ) );
+    $wpdb->query( $wpdb->prepare ( "UPDATE {$wpdb->leaguemanager_matches} SET `date` = '%s',  `round` = '%d', `home_team` = '%s', `away_team` = '%s', `match_day` = '%d', `location` = '%s', `league_id` = '%d', `group` = '%s', `final` = '%s', `custom` = '%s' WHERE `id` = %d", $date, $round, $home_team, $away_team, $match_day, $location, $league_id, $group, $final, maybe_serialize($custom), $match_id ) );
   }
 
 
