@@ -313,6 +313,7 @@ class LeagueManagerLoader
   function loadStyles()
   {
     wp_enqueue_style('thickbox');
+    // TODO XXXX is this necessary
     wp_enqueue_style('leaguemanager', LEAGUEMANAGER_URL . "/style.css", false, '1.0', 'screen');
     
     echo "\n<style type='text/css'>";

@@ -106,7 +106,7 @@ class LeagueManagerImage extends LeagueManager
 		$thumb = $leaguemanager->getThumbnailPath($this->image);
 
 		$thumbnail = new Thumbnail($image);
-		$thumbnail->resize( 60, 60 );
+		$thumbnail->resize( 80, 80 );
 		$thumbnail->save($image);
 		$thumbnail->resize( 30, 30 );
 		$thumbnail->save($thumb);
