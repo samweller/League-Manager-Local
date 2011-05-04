@@ -211,10 +211,22 @@ class LeagueManagerWidget extends WP_Widget
    */
   function showNextMatchBox($number, $instance, $echo = true)
   {
+    //echo '<pre>';
+    //print_r($instance);
+    //echo '</pre>';
+    
     global $leaguemanager;
 
     $match_limit = ( intval($instance['match_limit']) > 0 ) ? $instance['match_limit'] : false;     
     $search = "`league_id` = '".$instance['league']."' AND `final` = '' AND `season` = '".$instance['season']."' AND TIMEDIFF(NOW(), `date`) <= 0";
+
+    //$home_team_test = 8;
+    //if ( isset($home_team_test))
+    if ( isset($instance['team']))
+    {
+      $search .= " AND (`home_team` = '".$instance['team']."' OR `away_team` = '".$instance['team']."')";
+    }
+    
 
     if ( isset($instance['home_only']) && $instance['home_only'] == 1 )
       $search .= $leaguemanager->buildHomeOnlyQuery($instance['league']);
@@ -236,7 +248,8 @@ class LeagueManagerWidget extends WP_Widget
       }
   
       $out = "<div id='next_match_box_".$number."' class='match_box'>";
-      $out .= "<h4>$prev_link".__( 'Next Match', 'leaguemanager' )."$next_link</h4>";
+      
+      //$out .= "<h4>$prev_link".__( 'Next Match', 'leaguemanager' )."$next_link</h4>";
             
       $out .= "<div class='match' id='match-".$match->id."'>";
 
@@ -253,19 +266,29 @@ class LeagueManagerWidget extends WP_Widget
        //echo '<pre>';
        //print_r($instance);
        //echo '</pre>';
-
+       //echo strip_tags($home_team);
+       
+       // TODO XXX needs to be moved to functions
+       function safeTeamName($name) {
+         return strtolower(str_replace(" ","-",$name));
+       }
 
       $out .="<div class=\"team-box home\">";
-      $out .="<img class='home_logo' src='".$teams[$match->home_team]['logo']."' alt='' />";
+      $out .="<div class=\"".safeTeamName(strip_tags($home_team))."\">";
+      
+      //$out .="<img class='home_logo' src='".$teams[$match->home_team]['logo']."' alt='' />";
       $out .= $home_team;
+      $out .="</div>";
       $out .="</div>";
       
       $out .="<em class=\"vs\">vs</em>";
       
       $out .="<div class=\"team-box away\">";
-      $out .="<img class='home_logo' src='".$teams[$match->away_team]['logo']."' alt='' />";
+      $out .="<div class=\"".safeTeamName(strip_tags($away_team))."\">";
+      //$out .="<img class='home_logo' src='".$teams[$match->away_team]['logo']."' alt='' />";
       $out .= $away_team;
       $out .="</div>";
+      $out .="</div><br class='clearboth' />";
 
 
       //$out .= "<p class='match_title'><strong>". $match->title."</strong></p>";
@@ -286,7 +309,7 @@ class LeagueManagerWidget extends WP_Widget
       $location = $leaguemanager->getLocation($match->location);
       $out .= "<strong>".$location->name."</strong><br />";
       
-      $googlemap = "<a href='http://maps.google.com/maps?f=q&source=s_q&hl=en&ll=".$location->latlong."' target='_blank'>".$location->address."</a>";
+      $googlemap = "<a href='http://maps.google.com/maps?f=q&source=s_q&hl=en&ll=".$location->latlong."' target='_parent'>".$location->address."</a>";
       
       $out.= $googlemap;
       

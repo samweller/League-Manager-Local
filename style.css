@@ -291,9 +291,20 @@ div.teampage .prev_match .score {
 
 
 /* New Widget styles */
-.leaguemanager_widget .team-box {
-  width: 42%;
+
+.sidebar {
+  font: 13px/1.231 'Helvetica Neue',arial,helvetica,clean,sans-serif;
+}
+
+.team-box {
+  width: 90px;
   float: left;
+  display: block;
+}
+
+.team-box div {
+  background: url(http://www.gridironvictoria.com.au/custom/im/club-helmets.png) no-repeat;
+  padding-top: 75px;
 }
 
 .leaguemanager_widget .away {
@@ -310,5 +321,31 @@ div.teampage .prev_match .score {
   clear: both;
 }
 
+.leaguemanager_widget .match_box .home_logo {
+  display: none;
+}
+
+
+/* Team sprites */
+.home .western-crusaders { background-position: 0 -300px; }
+.away .western-crusaders { background-position: 0 -480px; }
+.home .northern-raiders { background-position: 0 -600px; }
+.away .northern-raiders { background-position: 0 -750px; }
+.home .croydon-rangers,
+.home .croydon-rangers2 { background-position: 0 -900px; }
+.away .croydon-rangers,
+.away .croydon-rangers2 { background-position: 0 -1050px; }
+.home .bay-city-buccaneers { background-position: 0 -1200px; }
+.away .bay-city-buccaneers { background-position: 0 -1350px; }
+.home .monash-barbarians,
+.home .monash-warriors { background-position: 0 -1500px; }
+.away .monash-barbarians,
+.away .monash-warriors { background-position: 0 -1648px; }
+.home .gippsland-gladiators { background-position: 0 -1800px; }
+.away .gippsland-gladiators { background-position: 0 -1950px; }
+.home .ballarat-pioneers { background-position: 0 -2100px; }
+.away .ballarat-pioneers { background-position: 0 -2250px; }
+.home .melbourne-uni-royals { background-position: 0 -2450px; }
+.away .melbourne-uni-royals { background-position: 0 -2600px; }
 
 
