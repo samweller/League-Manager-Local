@@ -183,6 +183,7 @@ class LeagueManagerAdminPanel extends LeagueManager
   }
   function loadScripts()
   {
+    wp_enqueue_script("scriptaculous-dragdrop");
     wp_register_script( 'leaguemanager_ajax', LEAGUEMANAGER_URL.'/admin/js/ajax.js', array('sack'), LEAGUEMANAGER_VERSION );
     wp_enqueue_script('leaguemanager_ajax');
     
